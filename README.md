@@ -1,1 +1,2 @@
-Dogs are man's bestfriend.
+Dogs are man's bestfriends
+Dogs are friendlier than cats. 
