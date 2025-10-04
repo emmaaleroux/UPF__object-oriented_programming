@@ -1,0 +1,8 @@
+Q1. I see I have two files I've created and modified to commit. 
+    and the message "no commits yet". Basically git is not traking yet the filed I've created. 
+
+Q2. Now I can see the README.md file has been commited. 
+
+Q3. The command should that I've added a new line since the last commit of the file README.md.
+
+Q4. Lab0 commit I think would be a good message. 
