@@ -25,7 +25,7 @@ public class Vector {
     // METHODS
 
     public Vector add(Vector v) {
-        e = new double[elems.length];
+        double[] e = new double[elems.length];
         for (int i = 0; i < elems.length; i++) {
             e[i] = elems[i] + v.elems[i];
         }
@@ -33,51 +33,51 @@ public class Vector {
     }
 
     public Vector subtract(Vector v) {
-        e = new double[elems.length];
+        double[] e = new double[elems.length];
         for (int i = 0; i < elems.length; i++) {
             e[i] = elems[i] - v.elems[i];
         }
-        return Vector(e);
+        return new Vector(e);
     }
 
     public Vector multiply(Vector v) {
-        e = new double[elems.length];
+        double[] e = new double[elems.length];
         for (int i = 0; i < elems.length; i++) {
             e[i] = elems[i] * v.elems[i];
         }
-        return Vector(e);
+        return new Vector(e);
     }
 
     public Vector divide(Vector v) {
-        e = new double[elems.length];
+        double[] e = new double[elems.length];
         for (int i = 0; i < elems.length; i++) {
             e[i] = elems[i] / v.elems[i];
         }
-        return Vector(e);
+        return new Vector(e);
     }
 
     public Vector multiply(double scalar) {
-        e = new double[elems.length];
+        double[] e = new double[elems.length];
         for (int i = 0; i < elems.length; i++) {
             e[i] = elems[i] * scalar;
         }
-        return Vector(e);
+        return new Vector(e);
     }
 
     public Vector divide(double scalar) {
-        e = new double[elems.length];
+        double[] e = new double[elems.length];
         for (int i = 0; i < elems.length; i++) {
             e[i] = elems[i] / scalar;
         }
-        return Vector(e);
+        return new Vector(e);
     }
 
     public Vector sqrt() {
-        e = new double[elems.length];
+        double[] e = new double[elems.length];
         for (int i = 0; i < elems.length; i++) {
             e[i] = Math.sqrt(elems[i]);
         }
-        return Vector(e);
+        return new Vector(e);
     }
 
     public double dotProduct(Vector v) {
@@ -100,11 +100,12 @@ public class Vector {
     public String toString() {
         String s = "[";
         for (int i = 0; i < elems.length; i++) {
-            s.append(elems[i]); // ???
-            if (i != elems.length - 1) {s += ", ";}
+            if (i > 0) {
+                s+= ", ";
+                s += elems[i];
+            }
         }
         s += "]";
         return s;
     }
-
 }

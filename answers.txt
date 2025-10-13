@@ -5,4 +5,8 @@ Q2. Now I can see the README.md file has been commited.
 
 Q3. The command should that I've added a new line since the last commit of the file README.md.
 
-Q4. Lab0 commit I think would be a good message. 
+Q4. "Lab 0: Initial commit with README" I think would be a clear and good message. 
+
+Q5. There are two commits. be2d18f these are the first 7 letters and numbers that identify the first commit.  
+
+
