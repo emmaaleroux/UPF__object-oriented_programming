@@ -17,9 +17,14 @@ public class Vector {
         }
     }
 
-    // GETTER
+    // GETTERS
     public int getDim() {
         return elems.length;
+    }
+
+    public double[] getElems() {
+        // We also created a getter for the elements array to be able to access them
+        return elems.clone();
     }
 
     // METHODS
