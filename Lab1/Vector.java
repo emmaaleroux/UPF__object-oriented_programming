@@ -1,7 +1,7 @@
 package Lab1;
 public class Vector {
     
-    // ATTRIBUTES
+    // ATTRIBUTE
     private double[] elems;
 
     // CONSTRUCTOR
@@ -27,6 +27,7 @@ public class Vector {
         return elems.clone();
     }
 
+    
     // METHODS
 
     public Vector add(Vector v) {

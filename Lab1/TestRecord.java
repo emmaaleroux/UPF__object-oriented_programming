@@ -13,8 +13,11 @@ public class TestRecord {
         // toString() for printing
         System.out.println("v1: " + v1.toString());
         System.out.println("v2: " + v2.toString());
+        if (v1.toString().equals("[1.0, 2.0, 3.0]") && v2.toString().equals("[1.0, 1.0, 1.0]")) {
+            System.out.println("toString() works!");
+        } else {errors +=1; System.out.println("toString() does not work...");}
 
-        /// Test Vector methods
+        /// Test the rest of Vector methods
         
         // getDim()
         if (v1.getDim() == 3 && v2.getDim() == 3) {
@@ -74,8 +77,8 @@ public class TestRecord {
         Record r1 = new Record(v1, 1);
         Record r2 = new Record(new Vector(new double[] {5, 10, 15}), 2.5);
         // toString()
-        System.out.println(r1.toString());
-        System.out.println(r2.toString());
+        System.out.println("r1: " + r1.toString());
+        System.out.println("r2: " + r2.toString());
 
         /// Test Record methods
         
