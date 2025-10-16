@@ -3,7 +3,7 @@ public class Record {
    
     // ATTRIBUTES
     private double output;
-    private Vector input; 
+    private Vector input; //this is aggregation
 
     // CONSTRUCTOR
     public Record(Vector i, double o) {

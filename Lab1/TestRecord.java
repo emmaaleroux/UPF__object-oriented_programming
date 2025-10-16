@@ -4,7 +4,7 @@ public class TestRecord {
     // MAIN
     public static void main(String[] args) {
 
-        int errors = 0;
+        int errors = 0; // Error counter
 
         /// Create and print Vector instances
         
