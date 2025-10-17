@@ -26,4 +26,3 @@ public class Record {
         return input.toString() + " -> " + output; 
     }
 }
-
