@@ -1,6 +1,6 @@
 package Lab2;
 
-public class StandardizedDataset {
+public class StandardizedDataset extends Dataset {
 
     // ATTRIBUTES
     private Vector mi;
@@ -10,7 +10,7 @@ public class StandardizedDataset {
 
     // CONSTRUCTOR
     public StandardizedDataset(Dataset d, Vector mi, Vector si, double mo, double so) {
-        // dataset
+        super(d.getDim());
         this.mi = mi;
         this.si = si;
         this.mo = mo;

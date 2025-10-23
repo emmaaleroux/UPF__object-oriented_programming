@@ -53,7 +53,13 @@ public class Dataset {
     }
 
     public String toString() {
-        // for record in array print r.toString()
+        String s = "{";
+        for (int i = 0; i < data.size(); i++) {
+            if (i > 0) { s+= ", "; }
+            s += data.get(i).toString();
+        }
+        s += "}";
+        return s;
     }
 
 }
