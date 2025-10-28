@@ -16,9 +16,10 @@ public class StandardizedDataset extends Dataset {
         this.mo = mo;
         this.so = so;
     }
-
+    /*
     public Record transform(Record r) {
         // return new Record(r2)
     }
+    */
 
 }
