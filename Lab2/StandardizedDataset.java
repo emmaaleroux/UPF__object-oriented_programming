@@ -16,10 +16,34 @@ public class StandardizedDataset extends Dataset {
         this.mo = mo;
         this.so = so;
     }
-    /*
-    public Record transform(Record r) {
-        // return new Record(r2)
+
+    // GETTERS
+    public Vector getMeanIn() {
+        return mi;
     }
-    */
+
+    public Vector getStdIn() {
+        return si;
+    }
+
+    public double getMeanOut() {
+        return mo;
+    }
+
+    public double getStdOut() {
+        return so;
+    }
+
+    // OTHER METHODS
+    public Record transform(Record r) {
+        // We standardize the input (x: Vector) as x' = (x - mi)/si 
+        Vector standardInput = r.getInput().subtract(mi).divide(si);
+
+        // We standardize the output (y: double) as y' = (y - mo) / so
+        double standardOutput = (r.getOutput() - mo) / so;
+        
+        return new Record(standardInput, standardOutput);
+    }
+
 
 }

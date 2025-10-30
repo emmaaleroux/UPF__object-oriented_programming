@@ -1,13 +1,13 @@
 package Lab2;
 
-import java.util.*; // We import util to use List and ArrayList
+import java.util.*; // We import util to use ArrayList
 
 public class Dataset {
 
     // ATTRIBUTES
 
     protected int dim;
-    protected List<Record> data;
+    protected ArrayList<Record> data;
 
     // CONSTRUCTOR
 
@@ -110,11 +110,25 @@ public class Dataset {
         return round5(std); 
     }
 
-    /*
+    
     public StandardizedDataset standardize() {
+        // First, we compute the attributes
+        Vector mi = meanInput();
+        Vector si = stdInput();
+        double mo = meanOutput();
+        double so = stdOutput();
 
+        StandardizedDataset standard = new StandardizedDataset(this, mi, si, mo, so);
+
+        // We use StandardizedDataset's method transform() to standardize each record
+        for (Record r : data) {
+            Record standardizedRecord = standard.transform(r);
+            standard.addRecord(standardizedRecord);
+        }
+
+        return standard;
     }
-    */
+    
     
     public String toString() {
         String s = "{";

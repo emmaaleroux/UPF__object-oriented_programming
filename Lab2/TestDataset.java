@@ -63,6 +63,42 @@ public class TestDataset {
             System.out.println("stdOutput() does not work...");
         }
 
+        // Tests for StandardizedDataset
+        StandardizedDataset s = dataset.standardize();
+
+        System.out.println("Standardized dataset: " + s.toString());
+
+        // We check that the StandardizedDataset s' mean and std are correct
+        
+        if (s.meanInput().toString().equals("[0.0, 0.0]")) {
+            System.out.println("Standardized input mean is correct: " + s.meanInput());
+        } else {
+            errors += 1;
+            System.out.println("Standardized input mean is NOT correct: " + s.meanInput());
+        }
+
+        if (s.stdInput().toString().equals("[1.0, 1.0]")) {
+            System.out.println("Standardized input std is correct: " + s.stdInput());
+        } else {
+            errors += 1;
+            System.out.println("Standardized input std is NOT correct: " + s.stdInput());
+        }
+
+        if (s.meanOutput() == 0.0) {
+            System.out.println("Standardized output mean is correct: " + s.meanOutput());
+        } else {
+            errors += 1;
+            System.out.println("Standardized output mean is NOT correct: " + s.meanOutput());
+        }
+
+        if (s.stdOutput() == 1.0) {
+            System.out.println("Standardized output std is correct: " + s.stdOutput());
+        } else {
+            errors += 1;
+            System.out.println("Standardized output std is NOT correct: " + s.stdOutput());
+        }
+        
+
         // Errors count
         System.out.println("Errors found: " + errors);
         if (errors == 0) {System.out.println("Everything works!");}
