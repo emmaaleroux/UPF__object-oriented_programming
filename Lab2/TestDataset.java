@@ -25,10 +25,10 @@ public class TestDataset {
             // Dimension 1: (1 + 3 + 5) / 3 = 3
             // Dimension 2: (2 + 4 + 6) / 3 = 4
         if (mean.toString().equals("[3.0, 4.0]")) {
-            System.out.println("meanInput() works!");
+            System.out.println("meanInput() works: " + mean.toString());
         } else {
             errors += 1;
-            System.out.println("meanInput() does not work...");
+            System.out.println("meanInput() does not work: " + mean.toString());
         }
 
         // stdInput()
@@ -37,29 +37,63 @@ public class TestDataset {
             // Dimension 1: sqrt(( (1-3)^2 + (3-3)^2 + (5-3)^2 ) / 3) = 1.63299
             // Dimension 2: sqrt(( (2-4)^2 + (4-4)^2 + (6-4)^2 ) / 3) = 1.63299
         if (std.toString().equals("[1.63299, 1.63299]")) {
-            System.out.println("stdInput() works!");
+            System.out.println("stdInput() works: " + std.toString());
         } else {
             errors += 1;
-            System.out.println("stdInput() does not work...");
+            System.out.println("stdInput() does not work: " + std.toString());
         }
 
         // meanOut()
         // Mean computation: (5.0 + 7.0 + 9.0) / 3.0) = 7.0
         if (d1.meanOutput() == 7.0) {
-            System.out.println("meanOutput() works!");
+            System.out.println("meanOutput() works: " + d1.meanOutput());
         } else {
             errors += 1;
-            System.out.println("meanOutput() does not work...");
+            System.out.println("meanOutput() does not work: " + d1.meanOutput());
         }
 
         // stdOutput()
         // Std computation: sqrt(( (5-7)^2 + (7-7)^2 + (9-7)^2) / 3.0 ) = 1.63299
         if (d1.stdOutput() == 1.63299) {
-            System.out.println("stdOutput() works!");
+            System.out.println("stdOutput() works: " + d1.stdOutput());
         } else {
             errors += 1;
-            System.out.println("stdOutput() does not work...");
+            System.out.println("stdOutput() does not work: " + d1.stdOutput());
         }
+
+
+        // minInput()
+        if (d1.minInput().toString().equals("[1.0, 2.0]")) {
+            System.out.println("minInput() works: " + d1.minInput());
+        } else {
+            errors += 1;
+            System.out.println("minInput() does not work: " + d1.minInput());
+        }
+
+        // maxInput()
+        if (d1.maxInput().toString().equals("[5.0, 6.0]")) {
+            System.out.println("maxInput() works: " + d1.maxInput());
+        } else {
+            errors += 1;
+            System.out.println("maxInput() does not work: " + d1.maxInput());
+        }
+
+        // minOutput()
+        if (d1.minOutput() == 5.0) {
+            System.out.println("minOutput() works: " + d1.minOutput());
+        } else {
+            errors += 1;
+            System.out.println("minOutput() does not work: " + d1.minOutput());
+        }
+
+        // maxOutput()
+        if (d1.maxOutput() == 9.0) {
+            System.out.println("maxOutput() works: " + d1.maxOutput());
+        } else {
+            errors += 1;
+            System.out.println("maxOutput() does not work: " + d1.maxOutput());
+        }
+
 
         // Dataset: exception tests to avoid potential errors
 
@@ -75,7 +109,7 @@ public class TestDataset {
             System.out.println("addRecord() exceptions work!");
         } else {
             errors += 1;
-            System.out.println("addRecord() exceptions do work...");
+            System.out.println("addRecord() exceptions do not work...");
         }
 
 
@@ -89,7 +123,7 @@ public class TestDataset {
             System.out.println("Standardized input mean is correct: " + s1.meanInput());
         } else {
             errors += 1;
-            System.out.println("Standardized input mean is NOT correct: " + s1.meanInput());
+            System.out.println("Standardized input mean is not correct: " + s1.meanInput());
         }
 
         // s.stdInput()
@@ -97,7 +131,7 @@ public class TestDataset {
             System.out.println("Standardized input std is correct: " + s1.stdInput());
         } else {
             errors += 1;
-            System.out.println("Standardized input std is NOT correct: " + s1.stdInput());
+            System.out.println("Standardized input std is not correct: " + s1.stdInput());
         }
 
         // s.meanOutput()
@@ -105,7 +139,7 @@ public class TestDataset {
             System.out.println("Standardized output mean is correct: " + s1.meanOutput());
         } else {
             errors += 1;
-            System.out.println("Standardized output mean is NOT correct: " + s1.meanOutput());
+            System.out.println("Standardized output mean is not correct: " + s1.meanOutput());
         }
 
         // s.stdOutput()
@@ -113,7 +147,7 @@ public class TestDataset {
             System.out.println("Standardized output std is correct: " + s1.stdOutput());
         } else {
             errors += 1;
-            System.out.println("Standardized output std is NOT correct: " + s1.stdOutput());
+            System.out.println("Standardized output std is not correct: " + s1.stdOutput());
         }
         
 
@@ -176,7 +210,7 @@ public class TestDataset {
 
         // Errors count
         System.out.println("\nErrors found: " + errors);
-        if (errors == 0) {System.out.println("Everything works!");}
+        if (errors == 0) {System.out.println("Everything works! \n");}
 
     }
 }
