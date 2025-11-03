@@ -3,20 +3,18 @@ package Lab2;
 import java.util.*; // We import util to use ArrayList
 
 public class Dataset { 
-    // ATTRIBUTES
 
+    // ATTRIBUTES
     protected int dim;
     protected ArrayList<Record> data; //aggregation relation with Record
 
     // CONSTRUCTOR
-
     public Dataset(int d) {
         dim = d;
         data = new ArrayList<>(); //starts empty, it will eventually be filled with Records 
     }
 
     // GETTERS
-
     public int getDim() {
         return dim;
     }
@@ -28,28 +26,27 @@ public class Dataset {
     // METHODS
 
     // Helper method to round the values (5 decimals)
-
     protected static double round5(double val) { //made it protected instead of private to be able to use it in NormalizedDataset.java
         return Math.round(val * 100000.0) / 100000.0;
     }
 
 
     public void addRecord(Record r) {
-        //Optional: before adding we check that the record and input are null to avoid exceptions
+        // Before adding we check that the record and input are null to avoid exceptions
         if (r == null || r.getInput() == null) {
             System.err.println("Can't add: record or input is null.");
             return;
         }
-        //Optional: before adding we check that the record's input vector length matches the dataset's dim
+        // Before adding we check that the record's input vector length matches the dataset's dim
         if (r.getInput().getDim() != dim) {
-            System.err.println("Can't add: input dim mismatch (" + r.getInput().getDim() + " != " + dim + ").");
+            System.err.println("Can't add: input dimension mismatch (" + r.getInput().getDim() + " != " + dim + ").");
             return;
         }
 
         data.add(r);
     }
 
-    public Vector meanInput(){ //dependency relation with Vector  
+    public Vector meanInput(){
         // First, we check that the Dataset is not empty.
         if (data.isEmpty()) {
             return new Vector(dim, 0.0);
@@ -151,96 +148,90 @@ public class Dataset {
         return s;
     }
 
-    //OPTIONAL: Normalized Datasets
+    // Optional: NormalizedDataset
     
-    //get minI to normalize
+    // We get minI to normalize
     public Vector minInput() {
-        if (data.isEmpty()) { //in case there is no data return a 0 vector of length dim
+        // First, we check that the dataset is not empty
+        if (data.isEmpty()) { 
+            // If it is, we return a Vector filled with 0.
             return new Vector(dim, 0.0);
         }
-
-        double[] m = data.get(0).getInput().getElems().clone(); //copy of first's input element
-        
-        //get the minimum: if x[i] is SMALLER than current m[i] then update m[i]
+        // We need a copy of the first input's element array
+        double[] min = data.get(0).getInput().getElems(); 
+        // We search for the minimum
         for (Record r : data) {
             double[] x = r.getInput().getElems();
             for (int i = 0; i < dim; i++){
-                if (x[i] < m[i]){
-                    m[i] = x[i];
+                if (x[i] < min[i]){
+                    min[i] = x[i];
                 }
             }
         }
-
-        return new Vector(m);
+        return new Vector(min);
     }
 
-    //get maxI to normalize
+    // We get maxI to normalize
     public Vector maxInput() {
-        if (data.isEmpty()) { //in case there is no data return a 0 vector of length dim
+        if (data.isEmpty()) {
             return new Vector(dim, 0.0);
         }
-
-        double[] M = data.get(0).getInput().getElems().clone();
-
+        // As before, we need a copy of the input
+        double[] max = data.get(0).getInput().getElems();
+        // We search for the maximum
         for (Record r : data) {
             double[] x = r.getInput().getElems();
             for (int i = 0; i < dim; i++) {
-                if (x[i] > M[i]) { //same as minI but now if x[i] is BIGGER than current m[i] then update m[i]
-                    M[i] = x[i];
+                if (x[i] > max[i]) {
+                    max[i] = x[i];
                 }
             }
-        }
-                
-        return new Vector(M);
+        } 
+        return new Vector(max);
     }
 
-    //get minO to normalize
-    public double minOutput() { //in case there is no data return a 0 vector of length dim
-        if (data.isEmpty()) return 0.0;
-
-        double m = data.get(0).getOutput();
-
-        for (Record r : data) { //scan all records 
-            if (r.getOutput() < m) { //update when we find a SMALLER output
-                m = r.getOutput();
+    // We get minO to normalize
+    public double minOutput() {
+        if (data.isEmpty()) {return 0.0;}
+        double min = data.get(0).getOutput();
+        // We search for the minimum
+        for (Record r : data) { 
+            if (r.getOutput() < min) { 
+                min = r.getOutput();
             }
         }
-
-        return m;
+        return min;
     }
 
-    //get maxO to normalize
-    public double maxOutput() { //in case there is no data return a 0 vector of length dim
-        if (data.isEmpty()) return 0.0;
-
-        double M = data.get(0).getOutput();
-
+    // We get maxO to normalize
+    public double maxOutput() {
+        if (data.isEmpty()) {return 0.0;}
+        double max = data.get(0).getOutput();
+        // We search for the maximum
         for (Record r : data) {
-            if (r.getOutput() > M) { //same as minO but now update if we find BIGGER output
-                M = r.getOutput();
+            if (r.getOutput() > max) {
+                max = r.getOutput();
             }
         }
-
-        return M;
+        return max;
     }
 
-    //normalize method
+    // Normalizing method
     public NormalizedDataset normalize() {
         Vector minI = minInput();
         Vector maxI = maxInput();
         double minO = minOutput();
         double maxO = maxOutput();
 
-        //Build normalized dataset
-        //counstructor calls super(d.getDim()) so when passing this we are actually passing dim 
-        NormalizedDataset norm_d = new NormalizedDataset(this, minI, maxI, minO, maxO); 
-        //System.out.println("minI=" + minI + ", maxI=" + maxI + ", minO=" + minO + ", maxO=" + maxO); 
+        // Build normalized dataset
+        NormalizedDataset norm = new NormalizedDataset(this, minI, maxI, minO, maxO); 
 
+        // We use NormalizedDataset's method transform() to normalize each record
         for (Record r : data) {
-            norm_d.addRecord(norm_d.transform(r)); //transform each record, it computes x' and y' and then stores transformed record
+            norm.addRecord(norm.transform(r));
         }
 
-        return norm_d; //return normalized dataset
+        return norm;
     }
 
 

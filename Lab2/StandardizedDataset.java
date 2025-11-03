@@ -36,22 +36,30 @@ public class StandardizedDataset extends Dataset {
 
     // OTHER METHODS
     public Record transform(Record r) {
-        //in case std = 0, avoid dividing by 0 and getting an error
+        // We check that we are not dividing by zero to avoid errors
         for (double s : si.getElems())
             if (s == 0.0) {
                 System.err.println("Input std = 0, can't standardize.");
-                return r; //we leave it unmodified
+                return r; 
             }
         if (so == 0.0) {
             System.err.println("Output std = 0, can't standardize.");
-            return r; //we leave it unmodified
+            return r; 
         }
 
-        // We standardize the input (x: Vector) as x' = (x - mi)/si 
+        // We standardize the input (x: Vector) as x' = (x - mi) / si 
         Vector standardInput = r.getInput().subtract(mi).divide(si);
+        // We round the input to 5 decimals
+        double[] roundedStandard = standardInput.getElems();
+        for (int i = 0; i < roundedStandard.length; i++) {
+            roundedStandard[i] = round5(roundedStandard[i]);
+        }
+        standardInput = new Vector(roundedStandard);
 
         // We standardize the output (y: double) as y' = (y - mo) / so
         double standardOutput = (r.getOutput() - mo) / so;
+        //We round the output to 5 decimals
+        standardOutput = round5(standardOutput);
         
         return new Record(standardInput, standardOutput);
     }

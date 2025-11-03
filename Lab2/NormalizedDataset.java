@@ -1,7 +1,5 @@
 package Lab2;
 
-//import static Lab2.Dataset.round5;
-
 public class NormalizedDataset extends Dataset {
 
     // ATTRIBUTES
@@ -11,12 +9,12 @@ public class NormalizedDataset extends Dataset {
     private double maxO;
 
     // CONSTRUCTOR
-    public NormalizedDataset(Dataset d, Vector minI, Vector maxI, double minO, double maxO) {
+    public NormalizedDataset(Dataset d, Vector minInput, Vector maxInput, double minOutput, double maxOutput) {
         super(d.getDim());
-        this.minI = minI;
-        this.maxI = maxI;
-        this.minO = minO;
-        this.maxO = maxO;
+        minI = minInput;
+        maxI = maxInput;
+        minO = minOutput;
+        maxO = maxOutput;
     }
 
     // GETTERS
@@ -39,45 +37,40 @@ public class NormalizedDataset extends Dataset {
     // METHODS
     
     public Record transform(Record r) {
-        //rangeI = (maxI - minI)
-        //denominator for inputs 
+        // rangeI = (maxI - minI)
         Vector rangeI = maxI.subtract(minI);
 
         //check zero range in inputs
         double[] range = rangeI.getElems(); 
-
         for (int i = 0; i < range.length; i++) {
             if (range[i] == 0.0) {
                 System.err.println("Input range = 0 at " + i + ", can't normalize.");
-                return r; // leave unchanged
+                return r;
             }
         }
         
-        //rangeO = (maxO - minO)
-        //check zero range in output
+        // rangeO = (maxO - minO)
         double rangeO = maxO - minO;
+        //check zero range in output
         if (rangeO == 0.0) {
             System.err.println("Output range = 0, can't normalize.");
-            return r; // leave unchanged
+            return r;
         }
 
-        // x' = (x - minI) / (maxI - minI)
+        // x' = (x - minI) / rangeI
         Vector normalizedInput = r.getInput().subtract(minI).divide(rangeI);
-
-        // round input to 5 decimals
-        double[] rounded_i = normalizedInput.getElems().clone();
-        for (int i = 0; i < rounded_i.length; i++) {
-            rounded_i[i] = round5(rounded_i[i]);
+        // We round the input to 5 decimals
+        double[] roundedNorm = normalizedInput.getElems();
+        for (int i = 0; i < roundedNorm.length; i++) {
+            roundedNorm[i] = round5(roundedNorm[i]);
         }
-        normalizedInput = new Vector(rounded_i);
+        normalizedInput = new Vector(roundedNorm);
         
 
-        // y' = (y - minO) / (maxO - minO)
+        // y' = (y - minO) / rangeO
         double normalizedOutput = (r.getOutput() - minO) / (maxO - minO);
-
-        //round output to 5 decimals
+        // We round the output to 5 decimals
         normalizedOutput = round5(normalizedOutput);
-
 
         return new Record(normalizedInput, normalizedOutput);
     }
