@@ -2,6 +2,7 @@ package Lab3;
 
 // Optional assignment: more compact methods of Vector
 import java.util.function.DoubleUnaryOperator;
+import java.util.Arrays;
 import java.util.function.DoubleBinaryOperator;
 
 public class Vector {
@@ -136,5 +137,14 @@ public class Vector {
         }
         s += "]";
         return s;
+    }
+
+    public Vector augment() {
+        double[] aug = new double[elems.length + 1];
+        for (int i = 0; i < elems.length; i++){
+            aug[i] = elems[i];
+        }
+        aug[elems.length] = 1.0;
+        return new Vector(aug);
     }
 }
