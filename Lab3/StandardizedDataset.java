@@ -39,12 +39,10 @@ public class StandardizedDataset extends Dataset {
         // We check that we are not dividing by zero to avoid errors
         for (double s : si.getElems())
             if (s == 0.0) {
-                System.err.println("Input std = 0, can't standardize.");
-                return r; 
+                throw new IllegalStateException("Input std = 0, can't standardize.");
             }
         if (so == 0.0) {
-            System.err.println("Output std = 0, can't standardize.");
-            return r; 
+            throw new IllegalStateException("Output std = 0, can't standardize.");
         }
 
         // We standardize the input (x: Vector) as x' = (x - mi) / si 

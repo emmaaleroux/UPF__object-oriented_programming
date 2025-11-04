@@ -44,8 +44,7 @@ public class NormalizedDataset extends Dataset {
         double[] range = rangeI.getElems(); 
         for (int i = 0; i < range.length; i++) {
             if (range[i] == 0.0) {
-                System.err.println("Input range = 0 at " + i + ", can't normalize.");
-                return r;
+                throw new IllegalStateException("Input range = 0 at " + i + ", can't normalize.");
             }
         }
         
@@ -53,8 +52,7 @@ public class NormalizedDataset extends Dataset {
         double rangeO = maxO - minO;
         //check zero range in output
         if (rangeO == 0.0) {
-            System.err.println("Output range = 0, can't normalize.");
-            return r;
+            throw new IllegalStateException("Output range = 0, can't normalize.");
         }
 
         // x' = (x - minI) / rangeI

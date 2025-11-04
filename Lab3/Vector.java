@@ -2,7 +2,6 @@ package Lab3;
 
 // Optional assignment: more compact methods of Vector
 import java.util.function.DoubleUnaryOperator;
-import java.util.Arrays;
 import java.util.function.DoubleBinaryOperator;
 
 public class Vector {
@@ -55,7 +54,7 @@ public class Vector {
         // the input is of the form (vector, (a,b) --> result)
         // ex: v, (a, b) -> (a + b) (lambda calculus)
 
-        // We add an exception in order to avoid dimension issues
+        // We throw an exception in order to avoid dimension issues
         if (v.getDim() != elems.length) {
             throw new IllegalArgumentException("Vector dimensions must match");
         }

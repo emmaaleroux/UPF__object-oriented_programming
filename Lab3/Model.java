@@ -19,6 +19,8 @@ public class Model {
     // OTHER METHODS
 
     public double predict(Vector v) {
+        // We assume v is already augmented
+        // f(v) = params · v.augmented
         return params.dotProduct(v);
     }
 

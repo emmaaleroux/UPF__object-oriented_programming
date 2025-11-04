@@ -20,7 +20,7 @@ public class Dataset {
     }
 
     public List<Record> getData() {
-        return data; //returns the actual list, not a copy
+        return data;
     }
 
     // METHODS
@@ -32,15 +32,13 @@ public class Dataset {
 
 
     public void addRecord(Record r) {
-        // Before adding we check that the record and input are null to avoid exceptions
+        // We check if the record and input are null to avoid exceptions
         if (r == null || r.getInput() == null) {
-            System.err.println("Can't add: record or input is null.");
-            return;
+            throw new IllegalArgumentException("Cannot add record: record or input is null.");
         }
-        // Before adding we check that the record's input vector length matches the dataset's dim
+        // We check that the record's input vector length matches the dataset's dim
         if (r.getInput().getDim() != dim) {
-            System.err.println("Can't add: input dimension mismatch (" + r.getInput().getDim() + " != " + dim + ").");
-            return;
+            throw new IllegalArgumentException("Cannot add record: input dimension mismatch (" + r.getInput().getDim() + " != " + dim + ").");
         }
 
         data.add(r);
