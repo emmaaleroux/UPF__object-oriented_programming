@@ -50,5 +50,4 @@ public class SupervisedLearner {
         return model.toString();
     }
     
-    
 }
