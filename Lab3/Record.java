@@ -3,7 +3,7 @@ public class Record {
    
     // ATTRIBUTES
     private double output;
-    private Vector input; //this is aggregation
+    private Vector input;
 
     // CONSTRUCTOR
     public Record(Vector i, double o) {
@@ -11,12 +11,11 @@ public class Record {
         output = o;
     }
 
-    // GETTER
+    // GETTERS
     public Vector getInput() {
         return input;
     }
 
-    // GETTER 2
     public double getOutput() {
         return output;
     }

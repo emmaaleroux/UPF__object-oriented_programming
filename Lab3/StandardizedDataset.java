@@ -63,6 +63,4 @@ public class StandardizedDataset extends Dataset {
         
         return new Record(standardInput, standardOutput);
     }
-
-
 }
