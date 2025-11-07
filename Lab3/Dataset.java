@@ -214,6 +214,8 @@ public class Dataset {
         return max;
     }
 
+    /* FROM LAB 2 - OPTIONAL
+
     // Normalizing method
     public NormalizedDataset normalize() {
         Vector minI = minInput();
@@ -231,4 +233,7 @@ public class Dataset {
 
         return norm;
     }
+
+    */
+
 }

@@ -1,22 +1,20 @@
 package Lab3;
 
 public class SupervisedLearner {
-    // Composition with Model; aggregation with Dataset and Algorithm
-    // Use/Dependency with vector
 
-    //ATRIBUTTES
+    // ATRIBUTTES
     private Algorithm algorithm; 
     private Dataset dataset;
     private Model model;
 
-    //CONSTRUCTOR
+    // CONSTRUCTOR
     public SupervisedLearner(Algorithm a, Dataset d){
         algorithm = a;
         dataset = d;
         model = null;
     }
 
-    //GETTER 
+    // GETTERS
     public Algorithm getAlgorithm(){
         return algorithm; 
     }
@@ -30,7 +28,8 @@ public class SupervisedLearner {
     }
 
 
-    //METHODS
+    // OTHER METHODS
+
     public void solve(){
         this.model = algorithm.solve(dataset);
     }
@@ -39,8 +38,8 @@ public class SupervisedLearner {
         if (model == null) {
             System.out.println("Model not learned, call solve() first");
         }
-        Vector vAug = v.augment(); //create x̄ from x
-        return model.predict(vAug); //f(x) = θ · x̄
+        Vector vAug = v.augment(); // create x̄ from x
+        return model.predict(vAug); // f(x) = θ · x̄
     }
 
     public String toString() {

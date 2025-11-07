@@ -3,52 +3,60 @@ package Lab3;
 public class TestLearner {
     public static void main(String[] args) {
         
-        //Error counter (as in the previous Labs)
-        int errors = 0;
 
-        // We build a tiny dataset (dim = 2)
-        // We choose outputs all 0.0 because linear regression learners will return zero-parameter vector
-        int dim = 2;
-        Dataset train = new Dataset(dim);
-        train.addRecord(new Record(new Vector(new double[]{1.0,  2.0}), 0.0)); //x₁ = [1, 2], y₁ = 0
-        train.addRecord(new Record(new Vector(new double[]{-3.0, 4.0}), 0.0)); //x₁ = [-3, 4], y₁ = 0
-        System.out.println("Dataset: " + train.toString());
+        int errors = 0; // Error counter
 
-        // Create an Algorithm
-        Algorithm alg = new Algorithm(0.01, 0.000001); //learning algorithm with learning rate 0.01 and tolerance 0.000001
+        // TESTING SUPERVISED LEARNER
 
-        // Create the learner 
-        SupervisedLearner learner = new SupervisedLearner(alg, train);
+        // We build a small dataset (dim = 2, n = 4) with a simple linear relationship: y = x1 + 2*x2 + 1
+        Dataset d = new Dataset(2);
+        d.addRecord(new Record(new Vector(new double[]{1.0, 1.0}), 4.0)); // 1 + 2*1 + 1 = 4
+        d.addRecord(new Record(new Vector(new double[]{2.0, 1.0}), 5.0)); // 2 + 2*1 + 1 = 5
+        d.addRecord(new Record(new Vector(new double[]{1.0, 3.0}), 8.0)); // 1 + 2*3 + 1 = 8
+        d.addRecord(new Record(new Vector(new double[]{3.0, 2.0}), 8.0)); // 3 + 2*2 + 1 = 8
+        System.out.println("\nDataset: " + d.toString());
+        System.out.println("Linear relationship: y = x1 + 2*x2 + 1");
 
-        // toString before solve() should tell us that the learner is not trained yet
-        String expectedUntrained = "Untrained model (call solve() first)";
-        String before = learner.toString();
-        if (expectedUntrained.equals(before)) {
-            System.out.println("toString BEFORE solve works!");
+        // Create algorithm (rate = 0.01, tolerance = 0.000001) and learner
+        Algorithm alg = new Algorithm(0.01, 0.000001); 
+        SupervisedLearner learner = new SupervisedLearner(alg, d);
+
+        // toString() before solve(): should tell us that the learner is not trained yet
+        if (learner.toString().equals("Untrained model, call solve() first")) {
+            System.out.println("\ntoString BEFORE solve() works!");
         } else {
-            errors = errors + 1;
-            System.out.println("toString BEFORE solve does not work.");
-            System.out.println("Expected: " + expectedUntrained);
-            System.out.println("Got: " + before);
+            errors++;
+            System.out.println("\ntoString BEFORE solve() does not work.");
+            System.out.println("Expected: Untrained model, call solve() first");
+            System.out.println("Got: " + learner.toString());
         }
 
-        // Train the model 
-        learner.solve(); //algorithm.solve(dataset) gets back a model
-        System.out.println("solve() called.");
+        // Train the model (gradient descend)
+        learner.solve();
 
-        // After training the model, toString should no longer show the untrained model message
-        String after = learner.toString();
-        if (!expectedUntrained.equals(after)) {
-            System.out.println("toString AFTER solve works!"); //the model is trained correctly
+        // toString() after solve(): should not show the untrained model message
+        if (!learner.toString().equals("Untrained model, call solve() first")) {
+            System.out.println("toString AFTER solve() works!");
         } else {
-            errors = errors + 1;
-            System.out.println("toString AFTER solve dones not work (still untrained)");
+            errors++;
+            System.out.println("toString AFTER solve() does not work... (still untrained)");
         }
 
-        ////////////////////
-        //falta test predict on non-augmented vector (predict after solve)
-        //////////////////
 
+        // predict()
+        System.out.println("\nLet's test predict().");
+        Vector v1 = new Vector(new double[]{2.0, 3.0});
+        double predicted = learner.predict(v1); 
+        // Expected: 2 + 2*3 + 1 = 9
+        System.out.println("Expected: 9.0");
+        if (Math.abs(predicted - 9.0) < 0.01) { // small tolerance
+            System.out.println("predict() works: " + Dataset.round5(predicted)); // We round the value for printing the test
+        } else {
+            errors++;
+            System.out.println("predict() does not work (too far from expected): " + Dataset.round5(predicted));
+        }
+
+        // Errors count
         System.out.println("\nErrors found: " + errors);
         if (errors == 0) {System.out.println("Everything works! \n");}
     }
