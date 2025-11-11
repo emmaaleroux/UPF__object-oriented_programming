@@ -8,19 +8,55 @@ public class TestLearner {
         // TESTING VECTOR
 
         System.out.println("\nLet's test augment().");
-        Vector v = new Vector(3, 2.0);
-        System.out.println("Vector: " + v.toString());
-        if (v.augment().toString().equals("[2.0, 2.0, 2.0, 1.0]")) {
-            System.out.println("augment() works: " + v.augment().toString());
+        Vector v0 = new Vector(3, 2.0);
+        System.out.println("Vector: " + v0.toString());
+        if (v0.augment().toString().equals("[2.0, 2.0, 2.0, 1.0]")) {
+            System.out.println("augment() works: " + v0.augment().toString());
         } else {
             errors++;
-            System.out.println("augment() does not work: " + v.augment().toString());
+            System.out.println("augment() does not work: " + v0.augment().toString());
+        }
+
+        // TESTING ALGORITHM AND MODEL
+
+        Dataset d0 = new Dataset(2);
+        d0.addRecord(new Record(new Vector(new double[]{1.0, 1.0}), 4.0));
+        d0.addRecord(new Record(new Vector(new double[]{2.0, 1.0}), 5.0));
+        System.out.println("Dataset: " + d0.toString());
+
+        Algorithm a0 = new Algorithm(0.01, 0.000001);
+        Model m0 = new Model(d0.getDim() + 1);
+
+        // algorithm.gradient()
+        System.out.println("\nLet's test Algorithm.gradient().");
+        Vector g0 = a0.gradient(d0, m0);
+        System.out.println("Gradient: " + g0.toString());
+        // The gradient should not be zero before training
+        if (g0.norm() > 0) {
+            System.out.println("gradient() works: nonzero norm = " + Dataset.round5(g0.norm()));
+        } else {
+            errors++;
+            System.out.println("gradient() does not work: zero norm");
+        }
+        
+        // model.update()
+        System.out.println("\nLet's test model.update().");
+        Model m1 = new Model(3);
+        Vector g1 = new Vector(new double[]{1.0, 1.0, 1.0});
+        System.out.println("Before update: " + m1.getParams());
+        m1.update(g1, 0.1);
+        // Expected: 0 - x * rate --> [-0.1, -0.1, -0.1]
+        if (m1.getParams().toString().equals("[-0.1, -0.1, -0.1]")) {
+            System.out.println("update() works: " + m1.getParams().toString());
+        } else {
+            errors++;
+            System.out.println("update() does not work (parameters unchanged).");
         }
 
 
         // TESTING SUPERVISED LEARNER (needs ALGORITHM and MODEL)
 
-        System.out.println("\nLet's test our SupervisedLearner.");
+        System.out.println("\nNow we can test our SupervisedLearner.");
 
         // We build a small dataset (dim = 2, n = 4) with a simple linear relationship: y = x1 + 2*x2 + 1
         Dataset d = new Dataset(2);
@@ -35,20 +71,8 @@ public class TestLearner {
         Algorithm alg = new Algorithm(0.01, 0.000001); 
         SupervisedLearner learner = new SupervisedLearner(alg, d);
 
-        // Algorithm.gradient()
-        System.out.println("\nFirst, let's test Algorithm.gradient(), needed for solve().");
-        Vector g = alg.gradient(d, new Model(d.getDim() + 1));
-        System.out.println("Gradient: " + g.toString());
-        // The gradient should not be zero before training
-        if (g.norm() > 0) {
-            System.out.println("gradient() works: nonzero norm = " + Dataset.round5(g.norm()));
-        } else {
-            errors++;
-            System.out.println("gradient() does not work: zero norm");
-        }
-
         // toString() before solve(): should tell us that the learner is not trained yet
-        System.out.println("\nLet's test toString() before training.");
+        System.out.println("\nLet's test toString() before training (exception).");
         if (learner.toString().equals("Untrained model, call solve() first")) {
             System.out.println("\ntoString BEFORE solve() works: " + learner.toString());
         } else {
@@ -63,7 +87,7 @@ public class TestLearner {
             System.out.println("solve() works!");
         } else {
             errors++;
-            System.out.println("solve() does not work... (still untrained)");
+            System.out.println("solve() does not work, still untrained");
         }
 
         // SupervisedLearner.predict(), needs Model.predict()
