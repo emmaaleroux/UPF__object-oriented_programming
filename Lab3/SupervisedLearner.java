@@ -1,7 +1,4 @@
 package Lab3;
-// Optional assignment: we import EJML
-import org.ejml.data.DMatrixRMaj;
-import org.ejml.dense.row.linsol.svd.SolvePseudoInverseSvd_DDRM;
 
 public class SupervisedLearner {
 
@@ -51,6 +48,7 @@ public class SupervisedLearner {
         }
         return model.toString();
     }
+    /*
 
     // Optional assignment: Moore-Penrose inverse
     public Model MPInverse() {
@@ -91,5 +89,6 @@ public class SupervisedLearner {
 
         return m;
     }
+    */
     
 }
