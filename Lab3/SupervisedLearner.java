@@ -1,4 +1,7 @@
 package Lab3;
+// javac -cp "Lab3\ejml-all-0.44.0.jar;." Lab3\*.java
+// java -cp "Lab3\ejml-all-0.44.0.jar;." Lab3.TestLearner
+// import org.ejml.*; ???
 
 public class SupervisedLearner {
 
@@ -49,46 +52,39 @@ public class SupervisedLearner {
         return model.toString();
     }
     /*
-
     // Optional assignment: Moore-Penrose inverse
     public Model MPInverse() {
-        // dimension
+
         int n = dataset.getData().size();
         int dim = dataset.getDim() + 1;
 
-        // build X matrix
-        DMatrixRMaj X = new DMatrixRMaj(n, dim);
-
+        // Build X
+        double[][] Xdata = new double[n][dim];
         for (int i = 0; i < n; i++) {
             Record r = dataset.getData().get(i);
             double[] aug = r.getInput().augment().getElems();
-            for (int j = 0; j < dim; j++) {
-                X.set(i, j, aug[j]);
-            }
+            System.arraycopy(aug, 0, Xdata[i], 0, dim);
         }
-        // build y vector
-        DMatrixRMaj y = new DMatrixRMaj(n, 1);
+        Matrix X = new SimpleMatrix(Xdata);
+
+        // Build y
+        double[][] ydata = new double[n][1];
         for (int i = 0; i < n; i++) {
-            y.set(i, 0, dataset.getData().get(i).getOutput());
+            ydata[i][0] = dataset.getData().get(i).getOutput();
         }
+        Matrix y = new SimpleMatrix(ydata);
 
-        // compute pseudoinverse θ* = X† y
-        DMatrixRMaj theta = new DMatrixRMaj(dim, 1); // result
-        SolvePseudoInverseSvd_DDRM pinv = new SolvePseudoInverseSvd_DDRM();
-        pinv.setA(X);       // compute pseudoinverse of X
-        pinv.solve(y, theta);
+        // θ* = X^\+ * y
+        SimpleMatrix theta = X.pseudoInverse().mult(y);
 
-        // return model
+        // Convert to Model
         double[] params = new double[dim];
-        for (int i = 0; i < dim; i++) {
+        for (int i = 0; i < dim; i++)
             params[i] = theta.get(i, 0);
-        }
 
         Model m = new Model(dim);
-        m.update(new Vector(params).multiply(-1), -1);    // force replace
-
+        m.update(new Vector(params).multiply(-1), -1); // your forced replace
         return m;
     }
     */
-    
 }
