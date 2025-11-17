@@ -104,6 +104,21 @@ public class TestLearner {
             System.out.println("predict() does not work (too far from expected): " + Dataset.round5(predicted));
         }
 
+        /*
+        //OPTIONAL: MOORE-PENROSE INVERSE 
+        //Compare gradient-descent model and Moore-Penrose model
+        System.out.println("\nComparing Gradient Descent vs Moore-Penrose solution:");
+
+        Model gdModel = learner.getModel();
+        System.out.println("Gradient Descent θ: " + gdModel.getParams().toString());
+
+        Model mpModel = learner.MPInverse();
+        System.out.println("Moore-Penrose θ: " + mpModel.getParams().toString());
+
+        Vector diff = gdModel.getParams().subtract(mpModel.getParams());
+        System.out.println("Norm of difference (GD - MP): " + diff.norm());
+         */
+
         // Errors count
         System.out.println("\nErrors found: " + errors);
         if (errors == 0) {System.out.println("Everything works! \n");}

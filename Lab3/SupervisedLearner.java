@@ -1,7 +1,7 @@
 package Lab3;
 // javac -cp "Lab3\ejml-all-0.44.0.jar;." Lab3\*.java
 // java -cp "Lab3\ejml-all-0.44.0.jar;." Lab3.TestLearner
-// import org.ejml.*; ???
+// import org.ejml.simple.SimpleMatrix; 
 
 public class SupervisedLearner {
 
@@ -51,20 +51,34 @@ public class SupervisedLearner {
         }
         return model.toString();
     }
+
+    
     /*
-    // Optional assignment: Moore-Penrose inverse
+    // OPTIONAL assignment: Moore-Penrose inverse
     public Model MPInverse() {
 
         int n = dataset.getData().size();
         int dim = dataset.getDim() + 1;
 
+        if (n == 0) {
+            System.out.println("Empty dataset.");
+            return new Model(dim);
+        }
+
         // Build X
         double[][] Xdata = new double[n][dim];
+        double[][] ydata = new double[n][1];
+
         for (int i = 0; i < n; i++) {
             Record r = dataset.getData().get(i);
             double[] aug = r.getInput().augment().getElems();
+            if (aug.length != dim) {
+                throw new IllegalStateException("Augmented input length mismatch (expected " + dim + ", got " + aug.length + ")");
+            }
             System.arraycopy(aug, 0, Xdata[i], 0, dim);
+            ydata[i][0] = r.getOutput();
         }
+
         Matrix X = new SimpleMatrix(Xdata);
 
         // Build y
@@ -72,19 +86,19 @@ public class SupervisedLearner {
         for (int i = 0; i < n; i++) {
             ydata[i][0] = dataset.getData().get(i).getOutput();
         }
-        Matrix y = new SimpleMatrix(ydata);
+        SimpleMatrix X = new SimpleMatrix(Xdata); // n x dim
+        SimpleMatrix y = new SimpleMatrix(ydata); // n x 1
 
         // θ* = X^\+ * y
         SimpleMatrix theta = X.pseudoInverse().mult(y);
 
         // Convert to Model
         double[] params = new double[dim];
-        for (int i = 0; i < dim; i++)
+        for (int i = 0; i < dim; i++){
             params[i] = theta.get(i, 0);
-
-        Model m = new Model(dim);
-        m.update(new Vector(params).multiply(-1), -1); // your forced replace
-        return m;
+        }
+        
+        return new Model(new Vector(params));
     }
     */
 }
