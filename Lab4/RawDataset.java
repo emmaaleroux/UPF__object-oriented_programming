@@ -4,28 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RawDataset extends Dataset{
-    private final int dim;
-    private final List<Record> data;
 
-    public RawDataset(int dim) {
-        this.dim = dim;
-        this.data = new ArrayList<>();
+    //CONSTRUCTOR
+    public RawDataset(int d) {
+        super(d);
     }
 
-    public int getDim() {
-        return dim;
-    }
+    //METHODS
 
-    public List<Record> getData() {
-        return data;
-    }
-
-    public void addRecord(Record r) {
-        data.add(r);
-    }
-
-    //////////////////////////////////////////////////////
-    //Methods that were in Dataset and are now here
+    //Methods that were in Dataset
 
     public Vector meanInput(){
         // First, we check that the Dataset is not empty.
@@ -118,14 +105,13 @@ public class RawDataset extends Dataset{
         return standard;
     }
 
-////////////////////////////////////////////
+    public abstract Record transform(Record r){
+        return r;
+    }  
+    
 
-    public double transform(double d){
-
+    public abstract double output(double d){
+        return d;
     }
-
-    public double output(double d){
-        
-    }
-
+    
 }
