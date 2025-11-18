@@ -11,11 +11,6 @@ public class Model {
         params = new Vector(dim, 0.0);
     }
 
-    /* OPTIONAL: MOORE-PENROSE INVERSE
-    public Model(Vector params) {
-        this.params = params;
-    */
-
     // GETTER
     public Vector getParams() {
         return params;
