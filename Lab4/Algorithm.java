@@ -23,7 +23,6 @@ public abstract class Algorithm {
 
     // OTHER METHODS
 
-    
     // the method gradient should not be here anymore
     public Vector gradient(Dataset ds, Model m) {
         int n = ds.getData().size(); // number n of elements in ds

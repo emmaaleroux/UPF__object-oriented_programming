@@ -1,4 +1,4 @@
-package Lab3;
+package Lab4;
 
 // Optional assignment: more compact methods of Vector
 import java.util.function.DoubleUnaryOperator;

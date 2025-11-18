@@ -1,4 +1,4 @@
-package Lab3;
+package Lab4;
 // OPTIONAL ASSIGNMENT: 
 // javac -cp "Lab3\ejml-all-0.44.0.jar;." Lab3\*.java
 // java -cp "Lab3\ejml-all-0.44.0.jar;." Lab3.TestLearner
