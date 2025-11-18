@@ -1,4 +1,4 @@
-package Lab4;
+package Lab3;
 
 public class TestLearner {
     public static void main(String[] args) {
@@ -111,23 +111,6 @@ public class TestLearner {
         } else {
             errors++;
             System.out.println("toString AFTER solve() does not work: " + learner.toString());
-        }
-
-        
-        //OPTIONAL: MOORE-PENROSE INVERSE 
-        //Compare gradient-descent model and Moore-Penrose model
-        System.out.println("\nLet's compare Gradient Descent and Moore-Penrose:");
-
-        Model gdModel = learner.getModel();
-        System.out.println("Gradient Descent: " + gdModel.getParams().toString());
-
-        Model mpModel = learner.mp();
-        if (mpModel == null) { // We could not implement it (see documentation), so we skip the test
-            System.out.println("Moore-Penrose model not computed (library not available), we skip the comparison.");
-        } else { // If we had been able to, this would be the comparison result
-            System.out.println("Moore-Penrose: " + mpModel.getParams());
-            Vector diff = gdModel.getParams().subtract(mpModel.getParams());
-            System.out.println("Norm of difference (GD - MP): " + diff.norm());
         }
 
         // Errors count
