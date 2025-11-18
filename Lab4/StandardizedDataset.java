@@ -35,6 +35,29 @@ public class StandardizedDataset extends Dataset {
     }
 
     // OTHER METHODS
+
+    @Override
+    public Record transform(Record r){ 
+        // compute a transformed input x̂ = (x − μ_in)/σ_in and reverse v · σ_out + μ_out
+        // standardize input
+        Vector x = r.getInput(); //get input vector x
+        Vector xStd = x.subtract(mi).divide(si);  
+
+        double[] elems = xStd.getElems();
+        for (int i = 0; i < elems.length; i++)
+            elems[i] = round5(elems[i]);
+
+        xStd = new Vector(elems);
+
+        // Standardize output
+        double yStd = (r.getOutput() - mo) / so; 
+        yStd = round5(yStd);
+
+        return new Record(xStd, yStd); //return standarized record
+    }
+
+    /*
+    @Override
     public Record transform(Record r) {
         // We check that we are not dividing by zero to avoid errors
         for (double s : si.getElems())
@@ -61,4 +84,11 @@ public class StandardizedDataset extends Dataset {
         
         return new Record(standardInput, standardOutput);
     }
+    */
+
+    @Override
+    public double output(double d){
+        return d * so + mo;
+    }
+
 }

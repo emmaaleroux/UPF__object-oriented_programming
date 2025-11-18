@@ -1,8 +1,5 @@
 package Lab4;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RawDataset extends Dataset{
 
     //CONSTRUCTOR
@@ -105,12 +102,13 @@ public class RawDataset extends Dataset{
         return standard;
     }
 
-    public abstract Record transform(Record r){
+    @Override
+    public Record transform(Record r){
         return r;
     }  
     
-
-    public abstract double output(double d){
+    @Override
+    public double output(double d){
         return d;
     }
     
