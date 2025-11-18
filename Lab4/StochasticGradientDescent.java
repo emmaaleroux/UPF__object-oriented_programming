@@ -1,38 +1,37 @@
 package Lab4;
 
 import java.util.Random;
-import javax.xml.crypto.Data;
 
 public class StochasticGradientDescent extends Algorithm{
     private final int batchSize;
     private final int iterations;
     private final Random random;
 
-    public StochasticGradientDescent(double lr, int bs, int i, Random r) {
+    public StochasticGradientDescent(double lr, int bs, int i) {
         super(lr);
         batchSize = bs;
         iterations = i;
-        random = (r == null) ? new Random() : r;
-    }
-
-    public StochasticGradientDescent(double learningRate, int batchSize, int iterations) {
-        this(learningRate, batchSize, iterations, new Random());
+        random = new Random();
     }
 
     public Vector stochasticGradient(Dataset ds, Model m){
-        int n = ds.size();
+        int n = ds.getData().size();
+        int bs = batchSize;
+        if (bs > n) {
+            System.out.println("Batch is greater than dataset. Setting batch size = dataset size - 1.");
+            bs = n - 1;
+        }
         Vector g = new Vector(ds.getDim() + 1, 0.0);
-        int[] indices = random.ints(0, n).distinct().limit(batchSize).toArray();
+        int[] indices = random.ints(0, n).distinct().limit(bs).toArray();
         for (int idx : indices) {
-            Record r = ds.getData()[idx];
-
+            Record r = ds.getData().get(idx);
             Vector aug = r.getInput().augment();
             double pred = m.predict(aug);
             double error = pred - r.getOutput();
 
             g = g.add(aug.multiply(error));
         }
-        return g.divide(batchSize); // We return the average
+        return g.divide(bs); // We return the average
     }
 
     @Override
