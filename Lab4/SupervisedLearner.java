@@ -27,8 +27,7 @@ public class SupervisedLearner {
         return model; 
     }
 
-
-    // OTHER METHODS
+    // METHODS
 
     public void solve(){
         this.model = algorithm.solve(dataset);
@@ -47,7 +46,6 @@ public class SupervisedLearner {
         double predOriginal = dataset.output(predInternal);
         return predOriginal;
     }
-
 
     public String toString() {
         if (model == null) {

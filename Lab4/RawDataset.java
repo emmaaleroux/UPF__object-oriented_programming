@@ -9,8 +9,7 @@ public class RawDataset extends Dataset{
 
     //METHODS
 
-    //Methods that were in Dataset
-
+    //Methods that were in Dataset (meanInput, stdInput, meanOutput, StdOutput, Standarize)
     public Vector meanInput(){
         // First, we check that the Dataset is not empty.
         if (data.isEmpty()) {

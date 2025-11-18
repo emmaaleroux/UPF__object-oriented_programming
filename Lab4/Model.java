@@ -17,7 +17,6 @@ public class Model {
     }
 
     // OTHER METHODS
-
     public double predict(Vector v) {
         // We assume x is already augmented (x̄)
         // f(x) = θ · x̄

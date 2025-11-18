@@ -34,8 +34,7 @@ public class StandardizedDataset extends Dataset {
         return so;
     }
 
-    // OTHER METHODS
-
+    // METHODS
     @Override
     public Record transform(Record r){ 
         // compute a transformed input x̂ = (x − μ_in)/σ_in and reverse v · σ_out + μ_out

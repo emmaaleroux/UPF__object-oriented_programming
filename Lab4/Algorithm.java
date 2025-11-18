@@ -15,7 +15,7 @@ public abstract class Algorithm {
         return learningRate;
     }
 
-    // OTHER METHODS
+    // METHODS
     public abstract Model solve(Dataset ds);
 
 }
