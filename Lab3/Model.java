@@ -33,10 +33,8 @@ public class Model {
         params = params.subtract(v.multiply(rate));
     }
 
-    /* OPTIONAL: MOORE-PENROSE INVERSE
     public String toString() {
         return params.toString();
     }
-    */
 
 }

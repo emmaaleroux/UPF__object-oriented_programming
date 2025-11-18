@@ -40,7 +40,7 @@ public class TestLearner {
         }
         
         // model.update()
-        System.out.println("\nLet's test model.update().");
+        System.out.println("\nLet's test Model.update().");
         Model m1 = new Model(3);
         Vector g1 = new Vector(new double[]{1.0, 1.0, 1.0});
         System.out.println("Before update: " + m1.getParams());
@@ -74,10 +74,10 @@ public class TestLearner {
         // toString() before solve(): should tell us that the learner is not trained yet
         System.out.println("\nLet's test toString() before training (exception).");
         if (learner.toString().equals("Untrained model, call solve() first")) {
-            System.out.println("\ntoString BEFORE solve() works: " + learner.toString());
+            System.out.println("toString BEFORE solve() works: " + learner.toString());
         } else {
             errors++;
-            System.out.println("\ntoString BEFORE solve() does not work: " + learner.toString());
+            System.out.println("toString BEFORE solve() does not work: " + learner.toString());
         }
     
         // SupervisedLearner.solve(), needs Algorithm.solve()
@@ -98,26 +98,37 @@ public class TestLearner {
         System.out.println("Expected: 9.0");
         if (Math.abs(predicted - 9.0) < 0.01) { // small tolerance
             System.out.println("predict() works: " + Dataset.round5(predicted)); // We round the value for printing the test
-            System.out.println("");
         } else {
             errors++;
             System.out.println("predict() does not work (too far from expected): " + Dataset.round5(predicted));
         }
 
-        /*
+        // toString() after solve(): should show the final parameters ([1.0, 2.0, 1.0])
+        System.out.println("\nLet's test toString() AFTER training.");
+        Vector elements = learner.getModel().getParams();
+        if ((Math.abs(elements.getElems()[0] - 1.0) < 0.01) && (Math.abs(elements.getElems()[1] - 2.0) < 0.01) && (Math.abs(elements.getElems()[2] - 1.0) < 0.01)) {
+            System.out.println("toString AFTER solve() works: " + learner.toString());
+        } else {
+            errors++;
+            System.out.println("toString AFTER solve() does not work: " + learner.toString());
+        }
+
+        
         //OPTIONAL: MOORE-PENROSE INVERSE 
         //Compare gradient-descent model and Moore-Penrose model
-        System.out.println("\nComparing Gradient Descent vs Moore-Penrose solution:");
+        System.out.println("\nLet's compare Gradient Descent and Moore-Penrose:");
 
         Model gdModel = learner.getModel();
-        System.out.println("Gradient Descent θ: " + gdModel.getParams().toString());
+        System.out.println("Gradient Descent: " + gdModel.getParams().toString());
 
-        Model mpModel = learner.MPInverse();
-        System.out.println("Moore-Penrose θ: " + mpModel.getParams().toString());
-
-        Vector diff = gdModel.getParams().subtract(mpModel.getParams());
-        System.out.println("Norm of difference (GD - MP): " + diff.norm());
-         */
+        Model mpModel = learner.MP();
+        if (mpModel == null) { // We could not implement it (see documentation), so we skip the test
+            System.out.println("Moore-Penrose model not computed (library not available), we skip the comparison.");
+        } else { // If we had been able to, this would be the comparison result
+            System.out.println("Moore-Penrose: " + mpModel.getParams());
+            Vector diff = gdModel.getParams().subtract(mpModel.getParams());
+            System.out.println("Norm of difference (GD - MP): " + diff.norm());
+        }
 
         // Errors count
         System.out.println("\nErrors found: " + errors);
