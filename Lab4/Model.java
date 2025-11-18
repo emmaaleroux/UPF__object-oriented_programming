@@ -1,4 +1,4 @@
-package Lab4;
+package Lab3;
 
 public class Model {
 
@@ -33,10 +33,8 @@ public class Model {
         params = params.subtract(v.multiply(rate));
     }
 
-    /* OPTIONAL: MOORE-PENROSE INVERSE
     public String toString() {
         return params.toString();
     }
-    */
 
 }

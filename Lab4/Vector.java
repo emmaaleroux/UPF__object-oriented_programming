@@ -1,4 +1,4 @@
-package Lab4;
+package Lab3;
 
 // Optional assignment: more compact methods of Vector
 import java.util.function.DoubleUnaryOperator;
@@ -132,7 +132,7 @@ public class Vector {
         String s = "[";
         for (int i = 0; i < elems.length; i++) {
             if (i > 0) { s+= ", "; }
-            s += elems[i];
+            s += Dataset.round5(elems[i]);
         }
         s += "]";
         return s;

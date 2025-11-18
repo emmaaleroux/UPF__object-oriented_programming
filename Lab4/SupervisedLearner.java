@@ -1,7 +1,9 @@
-package Lab4;
+package Lab3;
+// OPTIONAL ASSIGNMENT: 
 // javac -cp "Lab3\ejml-all-0.44.0.jar;." Lab3\*.java
 // java -cp "Lab3\ejml-all-0.44.0.jar;." Lab3.TestLearner
-// import org.ejml.simple.SimpleMatrix; 
+// import org.ejml.data.DMatrixRMaj;
+// import org.ejml.dense.row.linsol.svd.SolvePseudoInverseSvd_DDRM;
 
 public class SupervisedLearner {
 
@@ -53,52 +55,53 @@ public class SupervisedLearner {
     }
 
     
-    /*
-    // OPTIONAL assignment: Moore-Penrose inverse
-    public Model MPInverse() {
+    
+    // OPTIONAL ASSIGNEMENT: Moore-Penrose inverse θ* = X† y
 
+    public Model mp() {
+        /*
+
+        // Matrix dimensions
         int n = dataset.getData().size();
-        int dim = dataset.getDim() + 1;
+        int dim = dataset.getDim() + 1; // dim = d + 1
 
+        // We try to avoid errors
         if (n == 0) {
             System.out.println("Empty dataset.");
             return new Model(dim);
         }
 
-        // Build X
-        double[][] Xdata = new double[n][dim];
-        double[][] ydata = new double[n][1];
+        // We build a matrix X of dimensions n x dim
+        // and a Vector Y of dimensions n x 1
+        DMatrixRMaj xData = new DMatrixRMaj(n, dim);
+        DMatrixRMaj yData = new DMatrixRMaj(n, 1);
 
-        for (int i = 0; i < n; i++) {
-            Record r = dataset.getData().get(i);
-            double[] aug = r.getInput().augment().getElems();
-            if (aug.length != dim) {
-                throw new IllegalStateException("Augmented input length mismatch (expected " + dim + ", got " + aug.length + ")");
+        int row = 0;
+        for (Record r : dataset.getData()) {
+            Vector aug = r.getInput().augment();
+            for (int col = 0; col < dim; col++) {
+                X.set(row, col, aug.get(col));
             }
-            System.arraycopy(aug, 0, Xdata[i], 0, dim);
-            ydata[i][0] = r.getOutput();
+            y.set(row, 0, r.getOutput());
+            row++;
         }
 
-        Matrix X = new SimpleMatrix(Xdata);
+        // We compute the pseudoinverse X† using SVD
+        SolvePseudoInverseSvd_DDRM pinv = new SolvePseudoInverseSvd_DDRM();
+        DMatrixRMaj theta = new DMatrixRMaj(dim, 1);
 
-        // Build y
-        double[][] ydata = new double[n][1];
-        for (int i = 0; i < n; i++) {
-            ydata[i][0] = dataset.getData().get(i).getOutput();
-        }
-        SimpleMatrix X = new SimpleMatrix(Xdata); // n x dim
-        SimpleMatrix y = new SimpleMatrix(ydata); // n x 1
+        pinv.setA(X);
+        pinv.solve(y, theta);
 
-        // θ* = X^\+ * y
-        SimpleMatrix theta = X.pseudoInverse().mult(y);
-
-        // Convert to Model
+        // Convert theta matrix to Model params
         double[] params = new double[dim];
-        for (int i = 0; i < dim; i++){
+        for (int i = 0; i < dim; i++) {
             params[i] = theta.get(i, 0);
         }
-        
+
         return new Model(new Vector(params));
+        */
+        return null;
     }
-    */
+   
 }

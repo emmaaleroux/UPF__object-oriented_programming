@@ -1,4 +1,4 @@
-package Lab4;
+package Lab3;
 public class Record {
    
     // ATTRIBUTES
