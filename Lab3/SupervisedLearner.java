@@ -58,7 +58,7 @@ public class SupervisedLearner {
     
     // OPTIONAL ASSIGNEMENT: Moore-Penrose inverse θ* = X† y
 
-    public Model MP() {
+    public Model mp() {
         /*
 
         // Matrix dimensions
