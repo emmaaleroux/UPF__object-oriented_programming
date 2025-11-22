@@ -6,7 +6,7 @@ public class GradientDescent extends Algorithm {
     private final double stoppingCriterion; // tolerance for stopping (on parameter-change magnitude)
 
     //CONSTRUCTOR
-    public GradientDescent(double lr, double sc, int mi) {
+    public GradientDescent(double lr, double sc) {
         super(lr);
         stoppingCriterion = sc;
     }

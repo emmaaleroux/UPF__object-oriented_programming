@@ -10,41 +10,44 @@ public class TestLearner {
         // 2. Tests of stochastic vs gradient for RawDataset
         System.out.println("\nTesting Stochastic gradient vs Gradient descend for RawDataset.");
 
+        // - Create RawDataset
+        // linear relationship: y = x1 + 2*x2 + 1
+        Dataset dRaw = new RawDataset(2);
+        dRaw.addRecord(new Record(new Vector(new double[]{1.0, 1.0}), 4.0)); // 1 + 2*1 + 1 = 4
+        dRaw.addRecord(new Record(new Vector(new double[]{2.0, 1.0}), 5.0)); // 2 + 2*1 + 1 = 5
+        dRaw.addRecord(new Record(new Vector(new double[]{1.0, 3.0}), 8.0)); // 1 + 2*3 + 1 = 8
+        dRaw.addRecord(new Record(new Vector(new double[]{3.0, 2.0}), 8.0)); // 3 + 2*2 + 1 = 8
+        System.out.println("\nRawDataset: " + dRaw.toString());
+
+        // - Train with GradientDescent
+        Algorithm algRawGd = new GradientDescent(0.01, 0.000001); 
+        SupervisedLearner learnerRawGd = new SupervisedLearner(algRawGd, dRaw);
+
+        // - Train with StochasticGradientDescent
+        int batchSize = 2;
+        int iterations = 4;
+        Algorithm algRawSg = new StochasticGradientDescent(0.01, batchSize, iterations); 
+        SupervisedLearner learnerRawSg = new SupervisedLearner(algRawGd, dRaw);
+        // - Compare predictions
+        // - Compare parameters (SGD is approximate)
+
         // 3. Tests of stochastic vs gradient for StandardizedDataset
-        System.out.println("\nTesting Stochastic gradient vs Gradient descend for StandardizedDataset.")
+        System.out.println("\nTesting Stochastic gradient vs Gradient descend for StandardizedDataset.");
+
+        // - Wrap RawDataset in StandardizedDataset
+        // - Repeat GD vs SGD training
+        // - Compare predictions
+        // - Predictions should be consistent after destandardizing
 
 
 
 
-
-
-        // LAB 3
-
-        // TESTING ALGORITHM AND MODEL
-
-        Dataset d0 = new Dataset(2);
-        d0.addRecord(new Record(new Vector(new double[]{1.0, 1.0}), 4.0));
-        d0.addRecord(new Record(new Vector(new double[]{2.0, 1.0}), 5.0));
-        System.out.println("Dataset: " + d0.toString());
-
-        Algorithm a0 = new Algorithm(0.01, 0.000001);
-        Model m0 = new Model(d0.getDim() + 1);
+        /* LAB 3
 
 
         // TESTING SUPERVISED LEARNER (needs ALGORITHM and MODEL)
 
         // We build a small dataset (dim = 2, n = 4) with a simple linear relationship: y = x1 + 2*x2 + 1
-        Dataset d = new Dataset(2);
-        d.addRecord(new Record(new Vector(new double[]{1.0, 1.0}), 4.0)); // 1 + 2*1 + 1 = 4
-        d.addRecord(new Record(new Vector(new double[]{2.0, 1.0}), 5.0)); // 2 + 2*1 + 1 = 5
-        d.addRecord(new Record(new Vector(new double[]{1.0, 3.0}), 8.0)); // 1 + 2*3 + 1 = 8
-        d.addRecord(new Record(new Vector(new double[]{3.0, 2.0}), 8.0)); // 3 + 2*2 + 1 = 8
-        System.out.println("\nDataset: " + d.toString());
-        System.out.println("Linear relationship: y = x1 + 2*x2 + 1");
-
-        // Create algorithm (rate = 0.01, tolerance = 0.000001) and learner
-        Algorithm alg = new Algorithm(0.01, 0.000001); 
-        SupervisedLearner learner = new SupervisedLearner(alg, d);
     
         // SupervisedLearner.solve(), needs Algorithm.solve()
         System.out.println("\nLet's test solve().");
@@ -78,6 +81,7 @@ public class TestLearner {
             errors++;
             System.out.println("toString AFTER solve() does not work: " + learner.toString());
         }
+        */
 
         // Errors count
         System.out.println("\nErrors found: " + errors);
