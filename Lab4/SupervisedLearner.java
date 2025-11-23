@@ -36,9 +36,10 @@ public class SupervisedLearner {
     public double predict(Vector v) {
         if (model == null) {
             System.out.println("Model not learned, call solve() first");
+            return 0;
         }
         // create a dummy record so that dataset.transform can be used
-        Record dummy = new Record(v, 0.0); // create a dummy using given input
+        Record dummy = new Record(v, 0.0);
         Record transformed = dataset.transform(dummy); 
         Vector vAug = transformed.getInput().augment(); // once transformed we augment it
         double predInternal = model.predict(vAug); // obtain prediction
