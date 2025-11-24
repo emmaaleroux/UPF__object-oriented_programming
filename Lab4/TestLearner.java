@@ -55,7 +55,7 @@ public class TestLearner {
 
         // 2.3 - Train with StochasticGradientDescent
         int batchSize = 2;
-        int iterations = 500;
+        int iterations = 200;
         Algorithm algRawSg = new StochasticGradientDescent(0.05, batchSize, iterations); 
         SupervisedLearner learnerRawSg = new SupervisedLearner(algRawSg, dRaw);
         learnerRawSg.solve();
