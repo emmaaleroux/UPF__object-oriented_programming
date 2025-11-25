@@ -5,13 +5,18 @@ public class GradientDescent extends Algorithm {
     // ATTRIBUTES
     private final double stoppingCriterion; // tolerance for stopping (on parameter-change magnitude)
 
-    //CONSTRUCTOR
+    // CONSTRUCTOR
     public GradientDescent(double lr, double sc) {
         super(lr);
         stoppingCriterion = sc;
     }
 
-    //METHODS
+    // GETTER
+    double getStoppingCriterion() {
+        return stoppingCriterion;
+    }
+
+    // METHODS
     public Vector gradient(Dataset ds, Model m){
         int n = ds.getData().size(); // number n of elements in ds
         // We initialize empty gradient of the loss function
