@@ -1,6 +1,16 @@
 
+#include <iostream>
+#include <vector>
+#include <random>
+#include <cmath>
+
 #include "Dataset.h"
 #include "Model.h"
+#include "Record.h"
+#include "GradientDescent.h"
+#include "StochasticGradientDescent.h"
+#include "SupervisedLearner.h"
+#include "Algorithm.h"
 
 int main() {
 
@@ -22,6 +32,8 @@ int main() {
     double d2 = v2.norm();
     
     std::cout << d1 << " " << d2 << "\n";
+
+    return 0;
     
 }
 
