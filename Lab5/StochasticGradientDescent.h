@@ -1,0 +1,6 @@
+
+# ifndef __STOCHASTICGRADIENTDESCENT__
+# define __STOCHASTICGRADIENTDESCENT__
+
+
+#endif
