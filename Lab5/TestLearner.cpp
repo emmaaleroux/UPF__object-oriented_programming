@@ -34,6 +34,5 @@ int main() {
     std::cout << d1 << " " << d2 << "\n";
 
     return 0;
-    
 }
 
