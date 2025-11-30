@@ -21,46 +21,52 @@ private:
     //ATTRIBUTES
     int batchSize;
     int iterations;
-    std::mt19937 rng;   // random engine for sampling
 
 public: 
 
     //CONSTRUCTOR
     StochasticGradientDescent(double lr = 0.01, int bs = 10, int iters = 1000) 
-        : Algorithm(lr), batchSize(bs), iterations(iters), rng(std::random_device{}()) {}
+        : Algorithm(lr), batchSize(bs), iterations(iters) {}
 
 
     //METHODS
 
     Vector stochasticGradient(const Dataset& ds, const Model& m){
         const auto data = ds.getData(); 
-        int n = data.size();
+        std::size_t n = data.size();
+
+        Vector g(ds.getDim() + 1, 0.0); // Gradient vector
+
+        if (n == 0) { // if empty dataset then return zero gradient
+            std::cout << "StochasticGradientDescent::stochasticGradient(): empty dataset\n" << std::endl;
+            return g;
+        }
+
         int bs = batchSize;
 
-        if (bs > n) {
-            std::cout << "Batch is greater than dataset. Setting batch size = dataset size - 1." << std::endl;
-            bs = n - 1;
+        if (bs > static_cast<int>(n)) {
+            std::cout << "Batch size greater than dataset. Setting batch size = n - 1.\n" << std::endl;
+            bs = static_cast<int>(n) - 1;
         }
         if (bs <= 0) bs = 1;
 
-        Vector g(ds.getDim() + 1, 0.0); 
+        std::vector<Record> batch;
+        
+        std::sample(data.begin(), data.end(), std::back_inserter(batch), bs, std::mt19937{ std::random_device{}() }); 
+        
+        // compute avg stochastic gradient (∇ = (1/bs) Σ (x_aug * (θ·x_aug - y)))
+        for (const Record& r : batch) {
+            Vector xAug = r.getInput().augment();  // augmented input (adds bias)
+            double y = r.getOutput();
+            double pred = m.predict(xAug);
+            double err = pred - y;
 
-        std::vector<int> indices(n); // Create a vector of indices 0,1,2,...,n-1
-        for (int i = 0; i < n; ++i) indices[i] = i;
-
-        std::shuffle(indices.begin(), indices.end(), rng); //Shuffle indices to simulate distinct random picks
-
-        // Take the first 'bs' indices as the batch
-        for (int i = 0; i < bs; ++i) {
-            int idx = indices[i];
-            const Record& r = data[idx];
-            Vector aug = r.getInput().augment();
-            double pred = m.predict(aug);
-            double error = pred - r.getOutput();
-
-            g = g.add(aug.multiply(error));
+            g = g.add(xAug.multiply(err));
         }
-        return g.multiply(1.0 / bs); // We return the average
+
+        // return mean gradient
+        return g.multiply(1.0 / static_cast<double>(bs));
+
     }
 
     
