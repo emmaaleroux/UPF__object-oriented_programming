@@ -17,7 +17,7 @@ class SupervisedLearner {
 private:
 
     //ATTRIBUTES
-    Algorithm *algorithm; // pointer to an Algorithm (owned or not; choose ownership policy)
+    Algorithm *algorithm; // pointer to an Algorithm
     Dataset dataset;
     std::unique_ptr<Model> model; // Model model;(java)
 
@@ -25,14 +25,6 @@ public:
 
     // CONSTRUCTOR
     SupervisedLearner(Algorithm* a, const Dataset& d) : algorithm(a), dataset(d), model(nullptr) {}
-    ////////////////////////////////////////////////
-    // default destructor — unique_ptr will free model automatically
-    ~SupervisedLearner() = default;
-
-    // disable copying (unique_ptr is not copyable)
-    SupervisedLearner(const SupervisedLearner&) = delete;
-    SupervisedLearner& operator=(const SupervisedLearner&) = delete;
-    ////////////////////////////////////////////////
 
 
     // GETTERS
