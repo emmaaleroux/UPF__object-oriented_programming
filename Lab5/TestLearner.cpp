@@ -32,10 +32,10 @@ int main() {
     Vector v4 = v1.add( v2 );
     Vector v5 = v2.subtract( v1 );
     Vector v6 = v1.multiply( 4 );
-    Vector v7 = v2.divide( 1.2 );
+    Vector v7 = v2.divide( 2 );
     Vector v8 = v2.multiply( v2 );
     
-    std::cout <<"v4 = v1+v2 = " << v4 << "\nv5 = v2-v1 = " << v5 << "\nv6 = v1*4 = " << v6 << "\nv7 = v2/1.3 = " << v7 << "\nv8 = v2*v2 = " << v8 << "\n";
+    std::cout <<"v4 = v1+v2 = " << v4 << "\nv5 = v2-v1 = " << v5 << "\nv6 = v1*4 = " << v6 << "\nv7 = v2/2 = " << v7 << "\nv8 = v2*v2 = " << v8 << "\n";
     
     if (v1.dotProduct(v2) == 1*1 + 2*1 + 3*1) {
         std::cout << "dotProduct() works!\n";
@@ -77,7 +77,48 @@ int main() {
     std::cout << "\nDataset:" << ds;
 
         // GRADIENT DESCENT
-    std::cout << "\nLet's test Gradient Descent.\n";
+    std::cout << "\n\nLet's test Gradient Descent.\n";
+    std::cout << "Linear relationship: y = x1 + 2*x2 + 1\n";
+
+    GradientDescent gd(0.01, 1e-6);
+    SupervisedLearner learnerGD(&gd, ds);
+
+    learnerGD.solve();
+
+    Vector test(std::vector<double>{2.0, 3.0});
+    double predGD = learnerGD.predict(test);
+
+    // Expected: 9.0
+    std::cout << "Gradient Descent prediction: " << predGD << "\n";
+    if (std::abs(predGD - 9.0) < 0.1) {
+        std::cout << "GradientDescent.predict() works!\n";
+    } else {
+        errors++;
+        std::cout << "GradientDescent.predict() does not work...\n";
+    }
+
+    std::cout << "\nLet's test Stochastic Gradient Descent.\n";
+    // We use the same values as in Lab 4
+    int batchSize = 2;
+    int iterations = 200;
+    StochasticGradientDescent sgd(0.05, batchSize, iterations);
+    SupervisedLearner learnerSGD(&sgd, ds);
+    learnerSGD.solve();
+
+    double predSGD = learnerSGD.predict(test);
+    std::cout << "Stochastic Gradient Descent prediction: " << predSGD << "\n";
+
+    if (std::abs(predGD - predSGD) < 0.5) {
+        std::cout << "SGD and GD predictions are consistent!\n";
+    } else {
+        errors++;
+        std::cout << "SGD and GD predictions differ too much...\n";
+    }
+
+    std::cout << "\nErrors found: " << errors << "\n";
+    if (errors == 0) {
+        std::cout << "Everything works!\n";
+    }
 
     return 0;
 }
