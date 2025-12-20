@@ -62,6 +62,7 @@ int main() {
         std::cout << "getOutput() works!\n";
     else { errors++; std::cout << "getOutput() does not work\n"; }
 
+        
         // DATASET
     std::cout << "\nLet's test Dataset.\n";
     Dataset ds(2);
