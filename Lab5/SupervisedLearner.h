@@ -17,9 +17,9 @@ class SupervisedLearner {
 private:
 
     //ATTRIBUTES
-    Algorithm *algorithm; // pointer to an Algorithm
+    Algorithm *algorithm;
     Dataset dataset;
-    std::unique_ptr<Model> model; // Model model;(java)
+    std::unique_ptr<Model> model;
 
 public:
 

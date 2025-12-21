@@ -25,13 +25,13 @@ private:
 public: 
 
     //CONSTRUCTOR
-    StochasticGradientDescent(double lr = 0.01, int bs = 10, int iters = 1000) 
-        : Algorithm(lr), batchSize(bs), iterations(iters) {}
+    StochasticGradientDescent(double lr = 0.01, int bs = 10, int i = 1000) 
+        : Algorithm(lr), batchSize(bs), iterations(i) {}
 
 
     //METHODS
 
-    Vector stochasticGradient(const Dataset& ds, const Model& m){
+    Vector stochasticGradient(const Dataset &ds, const Model &m){
         const auto data = ds.getData(); 
         std::size_t n = data.size();
 
